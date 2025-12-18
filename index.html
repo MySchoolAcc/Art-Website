@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <title>Art Portfolio</title>
 
-  <!-- FAVICON (browser tab image) -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="icon" type="image/png" href="images/icon.png">
   <link rel="shortcut icon" href="images/favicon.png">
 
   <style>
@@ -18,10 +17,6 @@
       background: radial-gradient(circle at bottom, #02030a 0%, #000 70%);
     }
 
-    /* =======================
-       STARFIELD BACKGROUND
-       ======================= */
-
     .stars,
     body::before,
     body::after {
@@ -32,7 +27,6 @@
       z-index: 0;
     }
 
-    /* MANY SMALL STARS */
     body::before {
       background-image:
         radial-gradient(1px 1px at 10px 20px, #fff 50%, transparent 51%),
@@ -45,8 +39,7 @@
       opacity: 0.65;
       animation: starsSlow 180s linear infinite;
     }
-
-    /* MEDIUM STARS */
+    
     body::after {
       background-image:
         radial-gradient(2px 2px at 60px 90px, #fff 50%, transparent 51%),
@@ -57,7 +50,6 @@
       animation: starsMedium 140s linear infinite;
     }
 
-    /* FAINT DISTANT STARS */
     .stars {
       background-image:
         radial-gradient(1px 1px at 120px 60px, #aaa 50%, transparent 51%),
@@ -82,10 +74,6 @@
       from { background-position: 0 0; }
       to { background-position: -1000px -1000px; }
     }
-
-    /* =======================
-       SCENES
-       ======================= */
 
     .scene, .scene-new {
       width: 1400px;
@@ -131,7 +119,6 @@
       margin-top: 30px;
     }
 
-    /* ABOUT BUTTON */
     .about-button {
       position: absolute;
       top: 90px;
@@ -153,7 +140,6 @@
       background: #444;
     }
 
-    /* DOORS */
     .doors {
       position: absolute;
       bottom: 120px;
@@ -203,7 +189,6 @@
       white-space: nowrap;
     }
 
-    /* GALLERY */
     .gallery-content {
       display: flex;
       gap: 40px;
@@ -237,8 +222,7 @@
     .painting-info p {
       font-size: 20px;
     }
-
-    /* ABOUT */
+    
     .about-content {
       max-width: 700px;
       text-align: center;
@@ -270,8 +254,7 @@
 <body>
 
   <div class="stars"></div>
-
-  <!-- MAIN SCENE -->
+  
   <div class="scene" id="scene-main">
     <div class="section-title">Layne Robinson's Portfolio</div>
     <button class="about-button" id="about-button">About Me</button>
@@ -299,7 +282,6 @@
     </div>
   </div>
 
-  <!-- GALLERY SCENE -->
   <div class="scene-new" id="scene-gallery">
     <div class="gallery-content">
       <div class="painting-frame">
@@ -313,7 +295,7 @@
     </div>
   </div>
 
-  <!-- ABOUT SCENE -->
+
   <div class="scene-new" id="scene-about">
     <div class="about-content">
       <h2>About Me</h2>
@@ -367,3 +349,4 @@
 
 </body>
 </html>
+

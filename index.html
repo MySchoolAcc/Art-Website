@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Art Museum Wall – 4 Doors</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      overflow: hidden;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      position: relative;
+    }
+
+    .scene, .scene-new {
+      width: 1400px;
+      height: 700px;
+      background: linear-gradient(#f5f3ef, #e6e2da);
+      border: 12px solid #2b2b2b;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 1s ease;
+      overflow: hidden;
+    }
+
+    .scene.hidden {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+      pointer-events: none;
+    }
+
+    .scene-new {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .scene-new.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .gallery-content {
+      display: flex;
+      flex-direction: row; /* painting left, text right */
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .painting-frame {
+      width: 500px;
+      height: 350px;
+      padding: 15px;
+      border: 12px solid #654321;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .painting {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .painting-info {
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .painting-info h2 {
+      font-size: 32px;
+      margin: 0;
+      color: #222;
+    }
+
+    .painting-info p {
+      font-size: 20px;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .back-button {
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      background: #eee;
+      color: #222;
+      border: 2px solid #bbb;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 20px;
+      transition: 0.3s;
+      align-self: flex-start;
+    }
+
+    .back-button:hover {
+      background: #ddd;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #2b2b2b;
+      text-transform: uppercase;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .doors {
+      position: absolute;
+      bottom: 120px;
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      padding: 0 60px;
+      box-sizing: border-box;
+      transition: all 0.8s ease;
+    }
+
+    .door {
+      width: 170px;
+      height: 340px;
+      border: 5px solid #2b1a0f;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05), 0 14px 28px rgba(0,0,0,0.45);
+      position: relative;
+      transition: all 0.8s ease;
+      cursor: pointer;
+      background: linear-gradient(#6b4a2b, #4a321c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .door::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      background: #c9b26d;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 4px rgba(0,0,0,0.6);
+    }
+
+    .door-hitbox {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 210px;
+      height: 380px;
+      cursor: pointer;
+      z-index: 10;
+      background: transparent;
+    }
+
+    .plaque {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #eee;
+      color: #222;
+      padding: 6px 10px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      border: 1px solid #bbb;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      max-width: 150px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- main Scene -->
+  <div class="scene" id="scene-main">
+    <div class="section-title">Layne Robinson's Portfolio</div>
+    <div class="doors">
+      <div class="door" data-door="1" data-image="images/night-picture.JPG" data-title="Watercolor Night" data-desc="A delicate watercolor piece capturing the night sky over a quiet town.">
+        <div class="door-hitbox"></div>
+        <div class="plaque">Watercolor Night</div>
+      </div>
+      <div class="door" data-door="2" data-image="images/album.JPG" data-title="Oil Pastel Album Cover" data-desc="An expressive oil pastel illustration designed as a music album cover.">
+        <div class="door-hitbox"></div>
+        <div class="plaque">Oil Pastel Album Cover</div>
+      </div>
+      <div class="door" data-door="3" data-image="images/master-copy.png" data-title="Gallery III" data-desc="Part of a series exploring abstract forms and vibrant colors.">
+        <div class="door-hitbox"></div>
+        <div class="plaque">Artist master copy</div>
+      </div>
+      <div class="door" data-door="4" data-image="images/contour.jpg" data-title="Final Contour Drawing" data-desc="A detailed contour drawing emphasizing line and form.">
+        <div class="door-hitbox"></div>
+        <div class="plaque">Final Contour Drawing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- gallery scene -->
+  <div class="scene-new" id="scene-new">
+    <div class="gallery-content">
+      <div class="painting-frame">
+        <div class="painting" id="painting"></div>
+      </div>
+      <div class="painting-info">
+        <h2 id="painting-title">Title</h2>
+        <p id="painting-desc">Description</p>
+        <button class="back-button" id="back-button">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const doors = document.querySelectorAll('.door');
+    const sceneMain = document.getElementById('scene-main');
+    const sceneNew = document.getElementById('scene-new');
+    const painting = document.getElementById('painting');
+    const paintingTitle = document.getElementById('painting-title');
+    const paintingDesc = document.getElementById('painting-desc');
+    const backButton = document.getElementById('back-button');
+
+    doors.forEach((door) => {
+      const hitbox = door.querySelector('.door-hitbox');
+
+      hitbox.addEventListener('click', () => {
+        const imageSrc = door.dataset.image;
+        const title = door.dataset.title;
+        const desc = door.dataset.desc;
+
+        painting.style.backgroundImage = `url('${imageSrc}')`;
+        paintingTitle.textContent = title;
+        paintingDesc.textContent = desc;
+
+        sceneMain.classList.add('hidden');
+        setTimeout(() => sceneNew.classList.add('visible'), 800);
+      });
+
+      hitbox.addEventListener('mouseenter', () => {
+        door.style.transform = 'scale(1.03)';
+        door.style.boxShadow = '0 20px 40px rgba(0,0,0,0.6)';
+      });
+
+      hitbox.addEventListener('mouseleave', () => {
+        door.style.transform = 'scale(1)';
+        door.style.boxShadow = 'inset 0 0 0 2px rgba(255,255,255,0.05), 0 14px 28px rgba(0,0,0,0.45)';
+      });
+    });
+
+    backButton.addEventListener('click', () => {
+      sceneNew.classList.remove('visible');
+      setTimeout(() => sceneMain.classList.remove('hidden'), 500);
+    });
+  </script>
+</body>
+</html>
